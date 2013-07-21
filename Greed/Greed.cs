@@ -8,6 +8,9 @@ namespace GreedKata
 {
     public class Greed
     {
-
+        public static int CalculateScore(int[] roll)
+        {
+            return 500;
+        }
     }
 }
