@@ -18,15 +18,22 @@ namespace GreedKata.Tests
         }
 
         [Test]
-        public void CalculateScore_AllOnes()
+        [TestCase(1, 100)]
+        [TestCase(2, 0)]
+        [TestCase(3, 0)]
+        [TestCase(4, 0)]
+        [TestCase(5, 50)]
+        [TestCase(6, 0)]
+        public void CalculateSingleNumber(int numberToTest, int expectedScore)
         {
-            TestRoll(new[] {1, 1, 1, 1, 1}, 500);
+            var score = Greed.CalculateScoreSingleNumber(numberToTest);
+            Assert.That(score, Is.EqualTo(expectedScore));
         }
 
         [Test]
         public void CalculateScore_AllTwos()
         {
-            TestRoll(new[] {2,2,2,2,2}, 0);
+            TestRoll(2.CreateArrayOf(5), 0);
         }
     }
 }

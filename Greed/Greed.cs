@@ -13,14 +13,15 @@ namespace GreedKata
             return roll.Sum(number => CalculateScoreSingleNumber(number));
         }
 
-        private static int CalculateScoreSingleNumber(int number)
+        internal static int CalculateScoreSingleNumber(int number)
         {
             
             switch (number)
             {
                 case 1:
                     return 100;
-
+                case 5:
+                    return 50;
                 default:
                     return 0;
             }
