@@ -10,19 +10,20 @@ namespace GreedKata
     {
         public static int CalculateScore(int[] roll)
         {
-            int score = 0;
+            return roll.Sum(number => CalculateScoreSingleNumber(number));
+        }
 
-            foreach (var num in roll)
-            {
-                switch (num)
-                {
-                    case 1:
-                        score += 100;
-                        break;
-                }
-            }
+        private static int CalculateScoreSingleNumber(int number)
+        {
             
-            return score;
+            switch (number)
+            {
+                case 1:
+                    return 100;
+
+                default:
+                    return 0;
+            }
         }
     }
 }
