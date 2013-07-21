@@ -10,7 +10,19 @@ namespace GreedKata
     {
         public static int CalculateScore(int[] roll)
         {
-            return 500;
+            int score = 0;
+
+            foreach (var num in roll)
+            {
+                switch (num)
+                {
+                    case 1:
+                        score += 100;
+                        break;
+                }
+            }
+            
+            return score;
         }
     }
 }

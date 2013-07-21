@@ -22,7 +22,11 @@ namespace GreedKata.Tests
         {
             TestRoll(new[] {1, 1, 1, 1, 1}, 500);
         }
-        
-        
+
+        [Test]
+        public void CalculateScore_AllTwos()
+        {
+            TestRoll(new[] {2,2,2,2,2}, 0);
+        }
     }
 }
