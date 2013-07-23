@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace GreedKata
 {
-    public class Greed
+    public static class Greed
     {
         public static int CalculateScore(int[] roll)
         {
+            
+
+
             return roll.Sum(number => CalculateScoreSingleNumber(number));
         }
 
@@ -25,6 +28,13 @@ namespace GreedKata
                 default:
                     return 0;
             }
+        }
+
+        internal static IEnumerable<IGrouping<int, int>> GetRepeatedNumbers(this int[] numbers)
+        {
+            var triples = numbers.GroupBy(x => x).OrderByDescending(x => x.Count());
+
+            return triples;
         }
     }
 }

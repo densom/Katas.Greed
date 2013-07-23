@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 
 namespace GreedKata.Tests
 {
@@ -37,6 +38,14 @@ namespace GreedKata.Tests
         }
 
         [Test]
+        public void CalculateScore_Triples()
+        {
+            var score = Greed.CalculateScore(new[] { 1, 1, 1, 2, 2 });
+
+            Assert.That(score, Is.EqualTo(1000));
+        }
+
+        [Test]
         [TestCase(new[] { 1, 1, 1, 5, 1 }, 1150, Ignore = true)]
         [TestCase(new[] { 2, 3, 4, 6, 2 }, 0)]
         [TestCase(new[] { 3, 4, 5, 3, 3 }, 350, Ignore = true)]
@@ -46,6 +55,19 @@ namespace GreedKata.Tests
         {
             TestRoll(numbersToTest, expectedScore);
         }
+
+        [Test]
+        [TestCase(new[] { 1, 1, 1 }, 1, 1)]
+        [TestCase(new[] { 2, 2, 2 }, 1, 2)]
+        [TestCase(new[] { 2, 2, 2, 1, 1 }, 2, 2)]
+        public void GetRepeatedNumbers(int[] set, int numberOfGroups, int largestGroup)
+        {
+            var results = Greed.GetRepeatedNumbers(set);
+
+            Assert.That(results.Count(), Is.EqualTo(numberOfGroups));
+            Assert.That(results.ToList()[0].Key, Is.EqualTo(largestGroup));
+        }
+
     }
 
 
