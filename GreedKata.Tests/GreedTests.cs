@@ -102,6 +102,14 @@ namespace GreedKata.Tests
             Assert.That(score, Is.EqualTo(8000));
         }
 
+        [Test]
+        public void CalculateScore_SixDice_Straight()
+        {
+            var score = Greed.CalculateScore(new[] {1, 2, 3, 4, 5, 6});
+
+            Assert.That(score, Is.EqualTo(1200));
+        }
+
     }
 
 

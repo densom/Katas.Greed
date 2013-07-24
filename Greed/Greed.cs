@@ -8,9 +8,17 @@ namespace GreedKata
 {
     public static class Greed
     {
+        const int StraightScore = 1200;
+
+
         public static int CalculateScore(int[] roll)
         {
             var sum = 0;
+
+            if (IsStraight(roll))
+            {
+                return StraightScore;
+            }
 
             foreach (var group in roll.GetNumberGroups())
             {
@@ -35,6 +43,27 @@ namespace GreedKata
             }
 
             return sum;
+        }
+
+        private static bool IsStraight(int[] roll)
+        {
+            if (roll.Count() < 6)
+            {
+                return false;
+            }
+
+            // order the values and see if there are any duplicates
+            var orderedRolls = roll.OrderBy(r => r).ToArray();
+
+            for (int i = 1; i < orderedRolls.Length; i++)
+            {
+                if (orderedRolls[i] == orderedRolls[i-1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static int ScoreLargeSet(int[] roll, int setSize, int multiplier)
