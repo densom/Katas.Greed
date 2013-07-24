@@ -18,16 +18,16 @@ namespace GreedKata
                 {
                     case 6:
                     case 5:
-                        sum += ScoreSetOfFive(item.ToArray());
+                        sum += ScoreLargeSet(item.ToArray(), 5, 4);
                         break;
                     case 4:
-                        sum += ScoreSetOfFour(item.ToArray());
+                        sum += ScoreLargeSet(item.ToArray(), 4, 2);
                         break;
                     case 3:
                         sum += ScoreSetOfTriples(item.ToArray());
                         break;
                     default:
-                        sum+= item.Sum(number => SingleNumberScore(number));
+                        sum += item.Sum(number => SingleNumberScore(number));
                         break;
                 }
             }
@@ -35,35 +35,14 @@ namespace GreedKata
             return sum;
         }
 
-        private static int ScoreSetOfFive(int[] roll)
+        private static int ScoreLargeSet(int[] roll, int setSize, int multiplier)
         {
             var score = 0;
-            var setOf = roll[0];
+            var setOf = roll.First();
 
-            score += 4 * ScoreSetOfTriples(roll.Take(3).ToArray());
+            score += multiplier * ScoreSetOfTriples(roll.Take(3).ToArray());
 
-            var numberOfExtras = roll.Count() - 5;
-
-            var extrasList = new List<int>(numberOfExtras);
-
-            for (var i = 0; i < numberOfExtras; i++)
-            {
-                extrasList.Add(setOf);
-            }
-
-            score += CalculateScore(extrasList.ToArray());
-
-            return score;
-        }
-
-        private static int ScoreSetOfFour(int[] roll)
-        {
-            var score = 0;
-            var setOf = roll[0];
-
-            score += 2 * ScoreSetOfTriples(roll.Take(3).ToArray());
-
-            var numberOfExtras = roll.Count() - 4;
+            var numberOfExtras = roll.Count() - setSize;
 
             var extrasList = new List<int>(numberOfExtras);
 
@@ -80,7 +59,7 @@ namespace GreedKata
         private static int ScoreSetOfTriples(int[] roll)
         {
             var score = 0;
-            var setOf = roll[0];
+            var setOf = roll.First();
 
             switch (setOf)
             {
@@ -120,7 +99,7 @@ namespace GreedKata
 
         internal static int SingleNumberScore(int number)
         {
-            
+
             switch (number)
             {
                 case 1:
