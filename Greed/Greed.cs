@@ -16,8 +16,11 @@ namespace GreedKata
             {
                 switch (item.Count())
                 {
+                    case 6:
                     case 5:
                     case 4:
+                        sum += ScoreSetOfFour(item.ToArray());
+                        break;
                     case 3:
                         sum += ScoreSetOfTriples(item.ToArray());
                         break;
@@ -28,6 +31,27 @@ namespace GreedKata
             }
 
             return sum;
+        }
+
+        private static int ScoreSetOfFour(int[] roll)
+        {
+            var score = 0;
+            var setOf = roll[0];
+
+            score += 2 * ScoreSetOfTriples(roll.Take(3).ToArray());
+
+            var numberOfExtras = roll.Count() - 4;
+
+            var extrasList = new List<int>(numberOfExtras);
+
+            for (var i = 0; i < numberOfExtras; i++)
+            {
+                extrasList.Add(setOf);
+            }
+
+            score += CalculateScore(extrasList.ToArray());
+
+            return score;
         }
 
         private static int ScoreSetOfTriples(int[] roll)

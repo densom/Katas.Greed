@@ -76,6 +76,16 @@ namespace GreedKata.Tests
             Assert.That(results.ToList()[0].Key, Is.EqualTo(largestGroup));
         }
 
+        /* Extra Credit */
+
+        [Test]
+        public void CalculateScore_SixDice_FourOfAKind()
+        {
+            var score = Greed.CalculateScore(new[] {1, 1, 1, 1, 2, 3});
+
+            Assert.That(score, Is.EqualTo(2000));
+        }
+
     }
 
 
