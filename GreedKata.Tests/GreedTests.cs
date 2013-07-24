@@ -23,14 +23,17 @@ namespace GreedKata.Tests
         [TestCase(4, 0)]
         [TestCase(5, 50)]
         [TestCase(6, 0)]
-        public void CalculateSingleNumber(int numberToTest, int expectedScore)
+        public void SingleNumberScore_CalculatesIndividualNumberScoreAmountsCorrectly(int numberToTest, int expectedScore)
         {
-            var score = Greed.CalculateScoreSingleNumbers(numberToTest);
+            var score = Greed.SingleNumberScore(numberToTest);
             Assert.That(score, Is.EqualTo(expectedScore));
         }
 
         [Test]
         [TestCase(1, 1200)]
+        [TestCase(2, 200)]
+        [TestCase(3, 300)]
+        [TestCase(4, 400)]
         [TestCase(5, 600)]
         public void CalculateScore_AllSameNumber(int numberToTest, int exptectedScore)
         {
@@ -38,18 +41,16 @@ namespace GreedKata.Tests
         }
 
         [Test]
-        public void CalculateScore_AllOnes()
+        [TestCase(new[] { 1, 1, 1, 2, 2 }, 1000)]
+        [TestCase(new[] { 2, 2, 2, 3, 3 }, 200)]
+        [TestCase(new[] { 3, 3, 3, 2, 2 }, 300)]
+        [TestCase(new[] { 4, 4, 4, 2, 2 }, 400)]
+        [TestCase(new[] { 5, 5, 5, 2, 2 }, 500)]
+        public void CalculateScore_Triples(int[] roll, int expectedScore)
         {
-            var score = Greed.CalculateScore(new[] {1, 1, 1, 1, 1,});
-            Assert.That(score, Is.EqualTo(1200));
-        }
+            var score = Greed.CalculateScore(roll);
 
-        [Test]
-        public void CalculateScore_Triples()
-        {
-            var score = Greed.CalculateScore(new[] { 1, 1, 1, 2, 2 });
-
-            Assert.That(score, Is.EqualTo(1000));
+            Assert.That(score, Is.EqualTo(expectedScore));
         }
 
         [Test]
@@ -67,9 +68,9 @@ namespace GreedKata.Tests
         [TestCase(new[] { 1, 1, 1 }, 1, 1)]
         [TestCase(new[] { 2, 2, 2 }, 1, 2)]
         [TestCase(new[] { 2, 2, 2, 1, 1 }, 2, 2)]
-        public void GetRepeatedNumbers(int[] set, int numberOfGroups, int largestGroup)
+        public void GetNumberGroups_ReturnsCorrectNumberOfGroupsWithLargestGroupOnTop(int[] set, int numberOfGroups, int largestGroup)
         {
-            var results = Greed.GetRepeatedNumbers(set);
+            var results = Greed.GetNumberGroups(set);
 
             Assert.That(results.Count(), Is.EqualTo(numberOfGroups));
             Assert.That(results.ToList()[0].Key, Is.EqualTo(largestGroup));

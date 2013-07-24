@@ -12,7 +12,7 @@ namespace GreedKata
         {
             var sum = 0;
 
-            foreach (var item in roll.GetRepeatedNumbers())
+            foreach (var item in roll.GetNumberGroups())
             {
                 switch (item.Count())
                 {
@@ -22,7 +22,7 @@ namespace GreedKata
                         sum += ScoreSetOfTriples(item.ToArray());
                         break;
                     default:
-                        sum+= item.Sum(number => CalculateScoreSingleNumbers(number));
+                        sum+= item.Sum(number => SingleNumberScore(number));
                         break;
                 }
             }
@@ -71,7 +71,7 @@ namespace GreedKata
             return score;
         }
 
-        internal static int CalculateScoreSingleNumbers(int number)
+        internal static int SingleNumberScore(int number)
         {
             
             switch (number)
@@ -85,11 +85,9 @@ namespace GreedKata
             }
         }
 
-        internal static IEnumerable<IGrouping<int, int>> GetRepeatedNumbers(this int[] numbers)
+        internal static IEnumerable<IGrouping<int, int>> GetNumberGroups(this int[] numbers)
         {
-            var triples = numbers.GroupBy(x => x).OrderByDescending(x => x.Count());
-
-            return triples;
+            return numbers.GroupBy(x => x).OrderByDescending(x => x.Count());
         }
     }
 }
