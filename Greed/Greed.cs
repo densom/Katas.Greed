@@ -10,13 +10,68 @@ namespace GreedKata
     {
         public static int CalculateScore(int[] roll)
         {
-            
+            var sum = 0;
 
+            foreach (var item in roll.GetRepeatedNumbers())
+            {
+                switch (item.Count())
+                {
+                    case 5:
+                    case 4:
+                    case 3:
+                        sum += ScoreSetOfTriples(item.ToArray());
+                        break;
+                    default:
+                        sum+= item.Sum(number => CalculateScoreSingleNumbers(number));
+                        break;
+                }
+            }
 
-            return roll.Sum(number => CalculateScoreSingleNumber(number));
+            return sum;
         }
 
-        internal static int CalculateScoreSingleNumber(int number)
+        private static int ScoreSetOfTriples(int[] roll)
+        {
+            var score = 0;
+            var setOf = roll[0];
+
+            switch (setOf)
+            {
+                case 1:
+                    score += 1000;
+                    break;
+                case 2:
+                    score += 200;
+                    break;
+                case 3:
+                    score += 300;
+                    break;
+                case 4:
+                    score += 400;
+                    break;
+                case 5:
+                    score += 500;
+                    break;
+                case 6:
+                    score += 600;
+                    break;
+            }
+
+            var numberOfExtras = roll.Count() - 3;
+
+            var extrasList = new List<int>(numberOfExtras);
+
+            for (var i = 0; i < numberOfExtras; i++)
+            {
+                extrasList.Add(setOf);
+            }
+
+            score += CalculateScore(extrasList.ToArray());
+
+            return score;
+        }
+
+        internal static int CalculateScoreSingleNumbers(int number)
         {
             
             switch (number)
