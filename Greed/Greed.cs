@@ -12,22 +12,24 @@ namespace GreedKata
         {
             var sum = 0;
 
-            foreach (var item in roll.GetNumberGroups())
+            foreach (var group in roll.GetNumberGroups())
             {
-                switch (item.Count())
+                switch (group.Count())
                 {
                     case 6:
+                        sum += ScoreLargeSet(group.ToArray(), 6, 8);
+                        break;
                     case 5:
-                        sum += ScoreLargeSet(item.ToArray(), 5, 4);
+                        sum += ScoreLargeSet(group.ToArray(), 5, 4);
                         break;
                     case 4:
-                        sum += ScoreLargeSet(item.ToArray(), 4, 2);
+                        sum += ScoreLargeSet(group.ToArray(), 4, 2);
                         break;
                     case 3:
-                        sum += ScoreSetOfTriples(item.ToArray());
+                        sum += ScoreSetOfTriples(group.ToArray());
                         break;
                     default:
-                        sum += item.Sum(number => SingleNumberScore(number));
+                        sum += group.Sum(number => SingleNumberScore(number));
                         break;
                 }
             }
