@@ -30,11 +30,11 @@ namespace GreedKata.Tests
         }
 
         [Test]
-        [TestCase(1, 1200)]
-        [TestCase(2, 200)]
-        [TestCase(3, 300)]
-        [TestCase(4, 400)]
-        [TestCase(5, 600)]
+        [TestCase(1, 4000)]
+        [TestCase(2, 800)]
+        [TestCase(3, 1200)]
+        [TestCase(4, 1600)]
+        [TestCase(5, 2000)]
         public void CalculateScore_AllSameNumber(int numberToTest, int exptectedScore)
         {
             TestRoll(numberToTest.CreateArrayOf(5), exptectedScore);
@@ -54,11 +54,11 @@ namespace GreedKata.Tests
         }
 
         [Test]
-        [TestCase(new[] { 1, 1, 1, 5, 1 }, 1150)]
+        [TestCase(new[] { 1, 1, 1, 5, 1 }, 2050)]
         [TestCase(new[] { 2, 3, 4, 6, 2 }, 0)]
         [TestCase(new[] { 3, 4, 5, 3, 3 }, 350)]
         [TestCase(new[] { 1, 5, 1, 2, 4 }, 250)]
-        [TestCase(new[] { 5, 5, 5, 5, 5 }, 600)]
+        [TestCase(new[] { 5, 5, 5, 5, 5 }, 2000)]
         public void CalculateScore_ExamplesFromInstructions(int[] numbersToTest, int expectedScore)
         {
             TestRoll(numbersToTest, expectedScore);
@@ -74,6 +74,40 @@ namespace GreedKata.Tests
 
             Assert.That(results.Count(), Is.EqualTo(numberOfGroups));
             Assert.That(results.ToList()[0].Key, Is.EqualTo(largestGroup));
+        }
+
+        /* Extra Credit */
+
+        [Test]
+        public void CalculateScore_SixDice_FourOfAKind()
+        {
+            var score = Greed.CalculateScore(new[] {1, 1, 1, 1, 2, 3});
+
+            Assert.That(score, Is.EqualTo(2000));
+        }
+
+        [Test]
+        public void CalculateScore_SixDice_FiveOfAKind()
+        {
+            var score = Greed.CalculateScore(new[] { 1, 1, 1, 1, 1, 3 });
+
+            Assert.That(score, Is.EqualTo(4000));
+        }
+
+        [Test]
+        public void CalculateScore_SixDice_SixOfAKind()
+        {
+            var score = Greed.CalculateScore(new[] { 1, 1, 1, 1, 1, 1 });
+
+            Assert.That(score, Is.EqualTo(8000));
+        }
+
+        [Test]
+        public void CalculateScore_SixDice_Straight()
+        {
+            var score = Greed.CalculateScore(new[] {1, 2, 3, 4, 5, 6});
+
+            Assert.That(score, Is.EqualTo(1200));
         }
 
     }

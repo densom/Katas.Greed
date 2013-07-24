@@ -8,21 +8,36 @@ namespace GreedKata
 {
     public static class Greed
     {
+        const int StraightScore = 1200;
+
+
         public static int CalculateScore(int[] roll)
         {
             var sum = 0;
 
-            foreach (var item in roll.GetNumberGroups())
+            if (IsStraight(roll))
             {
-                switch (item.Count())
+                return StraightScore;
+            }
+
+            foreach (var group in roll.GetNumberGroups())
+            {
+                switch (group.Count())
                 {
+                    case 6:
+                        sum += ScoreLargeSet(group.ToArray(), 6, 8);
+                        break;
                     case 5:
+                        sum += ScoreLargeSet(group.ToArray(), 5, 4);
+                        break;
                     case 4:
+                        sum += ScoreLargeSet(group.ToArray(), 4, 2);
+                        break;
                     case 3:
-                        sum += ScoreSetOfTriples(item.ToArray());
+                        sum += ScoreSetOfTriples(group.ToArray());
                         break;
                     default:
-                        sum+= item.Sum(number => SingleNumberScore(number));
+                        sum += group.Sum(number => SingleNumberScore(number));
                         break;
                 }
             }
@@ -30,10 +45,52 @@ namespace GreedKata
             return sum;
         }
 
+        private static bool IsStraight(int[] roll)
+        {
+            if (roll.Count() < 6)
+            {
+                return false;
+            }
+
+            // order the values and see if there are any duplicates
+            var orderedRolls = roll.OrderBy(r => r).ToArray();
+
+            for (int i = 1; i < orderedRolls.Length; i++)
+            {
+                if (orderedRolls[i] == orderedRolls[i-1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static int ScoreLargeSet(int[] roll, int setSize, int multiplier)
+        {
+            var score = 0;
+            var setOf = roll.First();
+
+            score += multiplier * ScoreSetOfTriples(roll.Take(3).ToArray());
+
+            var numberOfExtras = roll.Count() - setSize;
+
+            var extrasList = new List<int>(numberOfExtras);
+
+            for (var i = 0; i < numberOfExtras; i++)
+            {
+                extrasList.Add(setOf);
+            }
+
+            score += CalculateScore(extrasList.ToArray());
+
+            return score;
+        }
+
         private static int ScoreSetOfTriples(int[] roll)
         {
             var score = 0;
-            var setOf = roll[0];
+            var setOf = roll.First();
 
             switch (setOf)
             {
@@ -73,7 +130,7 @@ namespace GreedKata
 
         internal static int SingleNumberScore(int number)
         {
-            
+
             switch (number)
             {
                 case 1:
