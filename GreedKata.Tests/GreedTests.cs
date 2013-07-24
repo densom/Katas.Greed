@@ -86,6 +86,14 @@ namespace GreedKata.Tests
             Assert.That(score, Is.EqualTo(2000));
         }
 
+        [Test]
+        public void CalculateScore_SixDice_FiveOfAKind()
+        {
+            var score = Greed.CalculateScore(new[] { 1, 1, 1, 1, 1, 3 });
+
+            Assert.That(score, Is.EqualTo(4000));
+        }
+
     }
 
 
